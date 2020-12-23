@@ -56,7 +56,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--user-id",
-    required=TELEGRAM_TWITTER_USER_ID == None,
+    required=False,
     type=str,
     default=TELEGRAM_TWITTER_USER_ID
 )
@@ -68,6 +68,9 @@ access_token = args.access_token
 access_token_secret = args.access_token_secret
 bot_token = args.bot_token
 user_id = args.user_id
+
+if not user_id:
+    logger.warning('user_id not set, you will not be able to tweet')
 
 twitter = Twitter(consumer_key, consumer_secret, access_token, access_token_secret)
 
