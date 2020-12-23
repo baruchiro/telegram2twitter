@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  telegram2twitter:
+    build: .
+    image: telegram2twitter:latest
+    env_file: ./.env
+    restart: unless-stopped
