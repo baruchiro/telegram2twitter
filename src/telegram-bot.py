@@ -20,6 +20,7 @@ TELEGRAM_TWITTER_ACCESS_TOKEN = getenv("TELEGRAM_TWITTER_ACCESS_TOKEN")
 TELEGRAM_TWITTER_TOKEN_SECRET = getenv("TELEGRAM_TWITTER_TOKEN_SECRET")
 
 TELEGRAM_TWITTER_BOT_TOKEN = getenv("TELEGRAM_TWITTER_BOT_TOKEN")
+TELEGRAM_TWITTER_USER_ID = getenv("TELEGRAM_TWITTER_USER_ID")
 
 parser = argparse.ArgumentParser(
     description="Script to download files from Telegram Channel.")
@@ -53,6 +54,12 @@ parser.add_argument(
     type=str,
     default=TELEGRAM_TWITTER_BOT_TOKEN
 )
+parser.add_argument(
+    "--user-id",
+    required=TELEGRAM_TWITTER_USER_ID == None,
+    type=str,
+    default=TELEGRAM_TWITTER_USER_ID
+)
 args = parser.parse_args()
 
 consumer_key = args.consumer_key
@@ -60,6 +67,7 @@ consumer_secret = args.consumer_secret
 access_token = args.access_token
 access_token_secret = args.access_token_secret
 bot_token = args.bot_token
+user_id = args.user_id
 
 twitter = Twitter(consumer_key, consumer_secret, access_token, access_token_secret)
 
@@ -73,10 +81,15 @@ def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
 
+def get_id(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /start is issued."""
+    update.message.reply_text(update.effective_user.id)
+
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    message = format(update.message.text)
+    update.effective_user.id
+    message = format(update.message.text) if update.effective_user.id == user_id else None
     if message: twitter.status(message)
     update.message.reply_text(message or update.message.text)
     logger.info(message or update.message.text)
@@ -95,6 +108,7 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler("id", get_id))
 
     # on noncommand i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
