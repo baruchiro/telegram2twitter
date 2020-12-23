@@ -15,3 +15,4 @@ def format(source: str) -> str:
     if 'share.libbyapp.com' in source:
         name, author = _get_libby_detailes(source)
         return f"קורא עכשיו:\n{name} ({author})\n{source}\n\nעם #ליבי #הספריה_הדיגיטלית_הישראלית @LibbyApp"
+    return None

@@ -77,9 +77,9 @@ def help_command(update: Update, context: CallbackContext) -> None:
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     message = format(update.message.text)
-    twitter.status(message)
-    update.message.reply_text(message)
-    logger.info(message)
+    if message: twitter.status(message)
+    update.message.reply_text(message or update.message.text)
+    logger.info(message or update.message.text)
 
 
 def main():
