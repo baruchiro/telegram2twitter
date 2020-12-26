@@ -1,11 +1,14 @@
-import logging
-from twitter import Twitter
-from messageFormatter import format
-from os import getenv
 import argparse
+import logging
+from os import getenv
 
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.error import TelegramError
+from telegram.ext import (CallbackContext, CommandHandler, Filters,
+                          MessageHandler, Updater)
+
+from messageFormatter import format
+from twitter import Twitter
 
 # Enable logging
 logging.basicConfig(
@@ -74,6 +77,12 @@ if not user_id:
 
 twitter = Twitter(consumer_key, consumer_secret, access_token, access_token_secret)
 
+def error_handler(update: Update, context: CallbackContext):
+    try:
+        raise context.error
+    except TelegramError as e:
+        update.message.reply_text(e.message)
+        logger.exception(e)
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
@@ -114,6 +123,8 @@ def main():
 
     # on noncommand i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
+    dispatcher.add_error_handler(error_handler)
 
     # Start the Bot
     updater.start_polling()
