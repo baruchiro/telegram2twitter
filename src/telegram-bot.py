@@ -57,7 +57,7 @@ parser.add_argument(
 parser.add_argument(
     "--user-id",
     required=False,
-    type=str,
+    type=int,
     default=TELEGRAM_TWITTER_USER_ID
 )
 args = parser.parse_args()
@@ -91,7 +91,6 @@ def get_id(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.effective_user.id
     message = format(update.message.text) if update.effective_user.id == user_id else None
     if message: twitter.status(message)
     update.message.reply_text(message or update.message.text)
