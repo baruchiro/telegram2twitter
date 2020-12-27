@@ -12,8 +12,8 @@ from twitter import Twitter
 
 # Enable logging
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
@@ -27,42 +27,30 @@ TELEGRAM_TWITTER_USER_ID = getenv("TELEGRAM_TWITTER_USER_ID")
 
 parser = argparse.ArgumentParser(
     description="Script to download files from Telegram Channel.")
-parser.add_argument(
-    "--consumer-key",
-    required=TELEGRAM_TWITTER_CONSUMER_KEY == None,
-    type=str,
-    default=TELEGRAM_TWITTER_CONSUMER_KEY
-)
-parser.add_argument(
-    "--consumer-secret",
-    required=TELEGRAM_TWITTER_CONSUMER_SECRET == None,
-    type=str,
-    default=TELEGRAM_TWITTER_CONSUMER_SECRET
-)
-parser.add_argument(
-    "--access-token",
-    required=TELEGRAM_TWITTER_ACCESS_TOKEN == None,
-    type=str,
-    default=TELEGRAM_TWITTER_ACCESS_TOKEN
-)
-parser.add_argument(
-    "--access-token-secret",
-    required=TELEGRAM_TWITTER_TOKEN_SECRET == None,
-    type=str,
-    default=TELEGRAM_TWITTER_TOKEN_SECRET
-)
-parser.add_argument(
-    "--bot-token",
-    required=TELEGRAM_TWITTER_BOT_TOKEN == None,
-    type=str,
-    default=TELEGRAM_TWITTER_BOT_TOKEN
-)
-parser.add_argument(
-    "--user-id",
-    required=False,
-    type=int,
-    default=TELEGRAM_TWITTER_USER_ID
-)
+parser.add_argument("--consumer-key",
+                    required=TELEGRAM_TWITTER_CONSUMER_KEY == None,
+                    type=str,
+                    default=TELEGRAM_TWITTER_CONSUMER_KEY)
+parser.add_argument("--consumer-secret",
+                    required=TELEGRAM_TWITTER_CONSUMER_SECRET == None,
+                    type=str,
+                    default=TELEGRAM_TWITTER_CONSUMER_SECRET)
+parser.add_argument("--access-token",
+                    required=TELEGRAM_TWITTER_ACCESS_TOKEN == None,
+                    type=str,
+                    default=TELEGRAM_TWITTER_ACCESS_TOKEN)
+parser.add_argument("--access-token-secret",
+                    required=TELEGRAM_TWITTER_TOKEN_SECRET == None,
+                    type=str,
+                    default=TELEGRAM_TWITTER_TOKEN_SECRET)
+parser.add_argument("--bot-token",
+                    required=TELEGRAM_TWITTER_BOT_TOKEN == None,
+                    type=str,
+                    default=TELEGRAM_TWITTER_BOT_TOKEN)
+parser.add_argument("--user-id",
+                    required=False,
+                    type=int,
+                    default=TELEGRAM_TWITTER_USER_ID)
 args = parser.parse_args()
 
 consumer_key = args.consumer_key
@@ -75,7 +63,9 @@ user_id = args.user_id
 if not user_id:
     logger.warning('user_id not set, you will not be able to tweet')
 
-twitter = Twitter(consumer_key, consumer_secret, access_token, access_token_secret)
+twitter = Twitter(consumer_key, consumer_secret, access_token,
+                  access_token_secret)
+
 
 def error_handler(update: Update, context: CallbackContext):
     try:
@@ -83,6 +73,7 @@ def error_handler(update: Update, context: CallbackContext):
     except TelegramError as e:
         update.message.reply_text(e.message)
         logger.exception(e)
+
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
@@ -93,6 +84,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
 
+
 def get_id(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     update.message.reply_text(update.effective_user.id)
@@ -100,7 +92,8 @@ def get_id(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    message = format(update.message.text) if update.effective_user.id == user_id else None
+    message = format(
+        update.message.text) if update.effective_user.id == user_id else None
     if message: twitter.status(message)
     update.message.reply_text(message or update.message.text)
     logger.info(message or update.message.text)
@@ -122,7 +115,8 @@ def main():
     dispatcher.add_handler(CommandHandler("id", get_id))
 
     # on noncommand i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(
+        MessageHandler(Filters.text & ~Filters.command, echo))
 
     dispatcher.add_error_handler(error_handler)
 
