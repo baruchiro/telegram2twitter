@@ -14,5 +14,5 @@ def _get_libby_detailes(url: str) -> Tuple[str, str]:
 def format(source: str) -> str:
     if 'share.libbyapp.com' in source:
         name, author = _get_libby_detailes(source)
-        return f"קורא עכשיו:\n{name} ({author})\n{source}\n\nעם #ליבי #הספריה_הדיגיטלית_הישראלית @LibbyApp"
+        return f"קורא עכשיו:\n{name} ({author})\n{source}\n\nעם #ליבי #הספריה_הדיגיטלית_הישראלית @LibbyApp\n\n#פיד_קריאה #telegram2twitter"
     return None
