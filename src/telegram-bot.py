@@ -73,6 +73,9 @@ def error_handler(update: Update, context: CallbackContext):
     except TelegramError as e:
         update.message.reply_text(e.message)
         logger.exception(e)
+    except Exception as e:
+        update.message.reply_text(e.message)
+        logger.exception(e)
 
 
 def start(update: Update, context: CallbackContext) -> None:
