@@ -16,7 +16,7 @@ podcast_to_tag = {
     'מדברימדע': '@MadaGadol',
     'ניהול מוצר - גרסת הבמאי': '@pm_edition',
     'הסדנא בשיחה‎': '@hasadna',
-    'עושים תוכנה עם חן פלדמן ועמית בן דור Osim Tochna‎': '@ranlevi',
+    'עושים תוכנה עם חן פלדמן ועמית בן דור Osim Tochna‎': '@ranlevi @chenosfeldman @amit_bend @ETL_Diner',
     'רברס עם פלטפורמה‎': '@reversim',
     'מפתחים חסרי תרבות‎': '@notarbut',
     'בגוף ראשון': '#מרכז_יהל #בגוף_ראשון',
