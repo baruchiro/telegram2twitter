@@ -23,7 +23,8 @@ podcast_to_tag = {
     'נקודה IL - הפודקאסט של איגוד האינטרנט הישראלי': '@ISOCIL',
     'קצרים על מסילת ישרים עם הרב הלל רוטקוף‎': '#הישיבה_הגבוהה_בני_נצרים',
     'חיות כיס Hayot Kiss‎': '@amsterdamski2 @TzlilAvraham #חיותכיס',
-    'אלביט מדברים טכנולוגיה‎': '@ElbitSystemsLtd'
+    'אלביט מדברים טכנולוגיה‎': '@ElbitSystemsLtd',
+    'כגודל הציפייה‎': '@SivanAmitFranko'
 }
 
 def _get_podcast_details(url: str) -> Tuple[str, str]:
