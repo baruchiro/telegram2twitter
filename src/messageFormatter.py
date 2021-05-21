@@ -24,7 +24,8 @@ podcast_to_tag = {
     'קצרים על מסילת ישרים עם הרב הלל רוטקוף‎': '#הישיבה_הגבוהה_בני_נצרים',
     'חיות כיס Hayot Kiss‎': '@amsterdamski2 @TzlilAvraham #חיותכיס',
     'אלביט מדברים טכנולוגיה‎': '@ElbitSystemsLtd',
-    'כגודל הציפייה‎': '@SivanAmitFranko'
+    'כגודל הציפייה‎': '@SivanAmitFranko',
+    'גדי טאוב: שומר סף': '@GadiTaub1'
 }
 
 def _get_podcast_details(url: str) -> Tuple[str, str]:
