@@ -17,7 +17,7 @@ podcast_to_tag = {
     'ניהול מוצר - גרסת הבמאי': '@pm_edition',
     'הסדנא בשיחה‎': '@hasadna',
     'עושים תוכנה עם חן פלדמן ועמית בן דור Osim Tochna‎': '@ranlevi @chenosfeldman @amit_bend @ETL_Diner',
-    'רברס עם פלטפורמה‎': '@reversim',
+    'רברס עם פלטפורמה‎': '@reversim @rantav @orilahav',
     'מפתחים חסרי תרבות‎': '@notarbut',
     'בגוף ראשון': '#מרכז_יהל #בגוף_ראשון',
     'נקודה IL - הפודקאסט של איגוד האינטרנט הישראלי': '@ISOCIL',
