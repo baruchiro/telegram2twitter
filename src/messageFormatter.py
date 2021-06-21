@@ -25,7 +25,10 @@ podcast_to_tag = {
     'חיות כיס Hayot Kiss‎': '@amsterdamski2 @TzlilAvraham #חיותכיס',
     'אלביט מדברים טכנולוגיה‎': '@ElbitSystemsLtd',
     'כגודל הציפייה‎': '@SivanAmitFranko',
-    'גדי טאוב: שומר סף': '@GadiTaub1'
+    'גדי טאוב: שומר סף': '@GadiTaub1',
+    'פרונטאנד לנד': '@nirbenya @eladlevy @FrontendLandIO',
+    'קצרים: על מיתוג אישי, יצירת קשרים וקהילות‎': '@morad',
+    'צרות בהייטק - הפודקאסט‎': '@Arbel2025 @eranyac @hitechproblems'
 }
 
 def _get_podcast_details(url: str) -> Tuple[str, str]:
