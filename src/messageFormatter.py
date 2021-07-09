@@ -26,7 +26,7 @@ podcast_to_tag = {
     'אלביט מדברים טכנולוגיה‎': '@ElbitSystemsLtd',
     'כגודל הציפייה‎': '@SivanAmitFranko',
     'גדי טאוב: שומר סף': '@GadiTaub1',
-    'פרונטאנד לנד': '@nirbenya @eladlevy @FrontendLandIO',
+    'פרונטאנד לנד\u200e': '@nirbenya @eladlevy @FrontendLandIO',
     'קצרים: על מיתוג אישי, יצירת קשרים וקהילות‎': '@morad',
     'צרות בהייטק - הפודקאסט‎': '@Arbel2025 @eranyac @hitechproblems'
 }
