@@ -28,7 +28,10 @@ podcast_to_tag = {
     'גדי טאוב: שומר סף': '@GadiTaub1',
     'פרונטאנד לנד\u200e': '@nirbenya @eladlevy @FrontendLandIO',
     'קצרים: על מיתוג אישי, יצירת קשרים וקהילות‎': '@morad',
-    'צרות בהייטק - הפודקאסט‎': '@Arbel2025 @eranyac @hitechproblems'
+    'צרות בהייטק - הפודקאסט‎': '@Arbel2025 @eranyac @hitechproblems',
+    'ברווזגומי': '@BarvazG @VickiToVictory1',
+    'מתמטיקה שמתמטיקה‎': '@ShirPeled',
+    'לאן הלכת?‎': '@OfirUriel'
 }
 
 def _get_podcast_details(url: str) -> Tuple[str, str]:
