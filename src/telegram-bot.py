@@ -72,10 +72,10 @@ def error_handler(update: Update, context: CallbackContext):
     try:
         raise context.error
     except TelegramError as e:
-        update.message.reply_text(e.message)
+        update.message.reply_text(str(e))
         logger.exception(e)
     except Exception as e:
-        update.message.reply_text(e.message)
+        update.message.reply_text(str(e))
         logger.exception(e)
 
 
@@ -109,7 +109,7 @@ def echo(update: Update, context: CallbackContext) -> None:
 
     except Exception as e:
         logger.exception(e)
-        update.message.reply_text(e.message)
+        update.message.reply_text(str(e))
 
 
 def callback_timer(context: CallbackContext):
@@ -122,7 +122,7 @@ def callback_timer(context: CallbackContext):
         logger.exception(e)
         context.bot.send_message(
             chat_id=user_id,
-            text=e.message
+            text=str(e)
         )
 
 
