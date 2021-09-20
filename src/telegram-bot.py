@@ -8,6 +8,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
 from messageFormatter import format
+from system import get_ip
 from twitter import Twitter
 
 # Enable logging
@@ -95,11 +96,34 @@ def get_id(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    message = format(
-        update.message.text) if update.effective_user.id == user_id else None
-    if message: twitter.status(message)
-    update.message.reply_text(message or update.message.text)
-    logger.info(message or update.message.text)
+    if update.effective_user.id != user_id:
+        update.message.reply_text("You are not authorized to use this bot.")
+        return
+
+    try:
+        message = format(update.message.text)
+        if message:
+            twitter.status(message)
+        update.message.reply_text(message or update.message.text)
+        logger.info(message or update.message.text)
+
+    except Exception as e:
+        logger.exception(e)
+        update.message.reply_text(e.message)
+
+
+def callback_timer(context: CallbackContext):
+    try:
+        context.bot.send_message(
+            chat_id=user_id,
+            text=get_ip()
+        )
+    except Exception as e:
+        logger.exception(e)
+        context.bot.send_message(
+            chat_id=user_id,
+            text=e.message
+        )
 
 
 def main():
@@ -122,6 +146,11 @@ def main():
         MessageHandler(Filters.text & ~Filters.command, echo))
 
     dispatcher.add_error_handler(error_handler)
+
+    jobQueue = updater.job_queue
+
+    MINUTE = 60
+    jobQueue.run_repeating(callback_timer, interval=MINUTE * 5, first=0)
 
     # Start the Bot
     updater.start_polling()
