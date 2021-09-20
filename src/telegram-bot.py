@@ -8,7 +8,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
 from messageFormatter import format
-from system import get_ip
+from system import get_ip, ping
 from twitter import Twitter
 
 # Enable logging
@@ -112,11 +112,43 @@ def echo(update: Update, context: CallbackContext) -> None:
         update.message.reply_text(str(e))
 
 
-def callback_timer(context: CallbackContext):
+def command_ip(update: Update, context: CallbackContext) -> None:
+    if update.effective_user.id != user_id:
+        update.message.reply_text("You are not authorized to use this bot.")
+        return
+    callback_ip(context)
+
+
+def callback_ip(context: CallbackContext):
     try:
+        message = f'IP: {get_ip()}'
+        logger.info(message)
         context.bot.send_message(
             chat_id=user_id,
-            text=get_ip()
+            text=message
+        )
+    except Exception as e:
+        logger.exception(e)
+        context.bot.send_message(
+            chat_id=user_id,
+            text=str(e)
+        )
+
+
+def command_ping(update: Update, context: CallbackContext) -> None:
+    if update.effective_user.id != user_id:
+        update.message.reply_text("You are not authorized to use this bot.")
+        return
+    callback_ping(context)
+
+
+def callback_ping(context: CallbackContext):
+    try:
+        message = f'Ping: {ping()}'
+        logger.info(message)
+        context.bot.send_message(
+            chat_id=user_id,
+            text=message
         )
     except Exception as e:
         logger.exception(e)
@@ -140,6 +172,8 @@ def main():
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("id", get_id))
+    dispatcher.add_handler(CommandHandler("ip", command_ip))
+    dispatcher.add_handler(CommandHandler("ping", command_ping))
 
     # on noncommand i.e message - echo the message on Telegram
     dispatcher.add_handler(
@@ -150,7 +184,8 @@ def main():
     jobQueue = updater.job_queue
 
     MINUTE = 60
-    jobQueue.run_repeating(callback_timer, interval=MINUTE * 5, first=0)
+    jobQueue.run_repeating(callback_ip, interval=MINUTE * 5, first=1)
+    jobQueue.run_repeating(callback_ping, interval=MINUTE * 5, first=1)
 
     # Start the Bot
     updater.start_polling()
