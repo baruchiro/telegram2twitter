@@ -26,6 +26,8 @@ TELEGRAM_TWITTER_TOKEN_SECRET = getenv("TELEGRAM_TWITTER_TOKEN_SECRET")
 TELEGRAM_TWITTER_BOT_TOKEN = getenv("TELEGRAM_TWITTER_BOT_TOKEN")
 TELEGRAM_TWITTER_USER_ID = getenv("TELEGRAM_TWITTER_USER_ID")
 
+INTERFACE_NAME = getenv("INTERFACE_NAME")
+
 parser = argparse.ArgumentParser(
     description="Script to download files from Telegram Channel.")
 parser.add_argument("--consumer-key",
@@ -52,6 +54,10 @@ parser.add_argument("--user-id",
                     required=False,
                     type=int,
                     default=TELEGRAM_TWITTER_USER_ID)
+parser.add_argument("--interface-name",
+                    required=False,
+                    type=str,
+                    default=INTERFACE_NAME or 'eth0')
 args = parser.parse_args()
 
 consumer_key = args.consumer_key
@@ -60,6 +66,7 @@ access_token = args.access_token
 access_token_secret = args.access_token_secret
 bot_token = args.bot_token
 user_id = args.user_id
+interface_name = args.interface_name
 
 if not user_id:
     logger.warning('user_id not set, you will not be able to tweet')
@@ -121,7 +128,7 @@ def command_ip(update: Update, context: CallbackContext) -> None:
 
 def callback_ip(context: CallbackContext):
     try:
-        message = f'IP: {get_ip()}'
+        message = f'IP: {get_ip(interface_name)}'
         logger.info(message)
         context.bot.send_message(
             chat_id=user_id,
