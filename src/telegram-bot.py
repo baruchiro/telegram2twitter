@@ -126,14 +126,22 @@ def command_ip(update: Update, context: CallbackContext) -> None:
     callback_ip(context)
 
 
+last_ip = None
+
+
 def callback_ip(context: CallbackContext):
+    global last_ip
     try:
-        message = f'IP: {get_ip(interface_name)}'
+        tmp_ip = get_ip(interface_name)
+        message = f'IP: {tmp_ip}'
         logger.info(message)
-        context.bot.send_message(
-            chat_id=user_id,
-            text=message
-        )
+
+        if last_ip != tmp_ip:
+            last_ip = tmp_ip
+            context.bot.send_message(
+                chat_id=user_id,
+                text=message
+            )
     except Exception as e:
         logger.exception(e)
         context.bot.send_message(
@@ -149,14 +157,22 @@ def command_ping(update: Update, context: CallbackContext) -> None:
     callback_ping(context)
 
 
+last_ping = None
+
+
 def callback_ping(context: CallbackContext):
+    global last_ping
     try:
-        message = f'Ping: {ping()}'
+        tmp_ping = ping()
+        message = f'Ping: {tmp_ping}'
         logger.info(message)
-        context.bot.send_message(
-            chat_id=user_id,
-            text=message
-        )
+
+        if last_ping != tmp_ping:
+            last_ping = tmp_ping
+            context.bot.send_message(
+                chat_id=user_id,
+                text=message
+            )
     except Exception as e:
         logger.exception(e)
         context.bot.send_message(
