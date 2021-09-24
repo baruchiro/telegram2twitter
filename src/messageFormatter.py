@@ -17,6 +17,7 @@ podcast_to_tag = {
     'ניהול מוצר - גרסת הבמאי': '@pm_edition',
     'הסדנא בשיחה‎': '@hasadna',
     'עושים תוכנה עם חן פלדמן ועמית בן דור Osim Tochna‎': '@ranlevi @chenosfeldman @amit_bend @ETL_Diner',
+    'עושים היסטוריה עם רן לוי Osim Historia With Ran Levi‎': '@ranlevi',
     'רברס עם פלטפורמה‎': '@reversim @rantav @orilahav',
     'מפתחים חסרי תרבות‎': '@notarbut',
     'בגוף ראשון': '#מרכז_יהל #בגוף_ראשון',
@@ -31,7 +32,10 @@ podcast_to_tag = {
     'צרות בהייטק - הפודקאסט‎': '@Arbel2025 @eranyac @hitechproblems',
     'ברווזגומי': '@BarvazG @VickiToVictory1',
     'מתמטיקה שמתמטיקה‎': '@ShirPeled',
-    'לאן הלכת?‎': '@OfirUriel'
+    'לאן הלכת?‎': '@OfirUriel',
+    'עגלה ריקה‎': '@ruth_elbaz @WeissInbar',
+    'לא סופי Not Final‎': '@ymalchi @UshiShk @kann',
+    'התמונה הגדולה‎': '@therealnirs @aviadby'
 }
 
 def _get_podcast_details(url: str) -> Tuple[str, str]:
