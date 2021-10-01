@@ -28,7 +28,8 @@ podcast_to_tag = {
     'לאן הלכת?‎': '@OfirUriel',
     'עגלה ריקה‎': '@ruth_elbaz @WeissInbar',
     'לא סופי Not Final‎': '@ymalchi @UshiShk @kann',
-    'התמונה הגדולה‎': '@therealnirs @aviadby'
+    'התמונה הגדולה‎': '@therealnirs @aviadby',
+    'ההסכת שאין לומר את שמו The podcast who must not be named': '@shireuven @DorDugy @kann'
 }
 
 def _format_book(name: str, author: str, source: str) -> str:
