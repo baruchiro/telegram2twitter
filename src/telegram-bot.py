@@ -191,8 +191,8 @@ def main():
     jobQueue = updater.job_queue
 
     MINUTE = 60
-    jobQueue.run_repeating(callback_ip, interval=MINUTE * 5, first=1)
-    jobQueue.run_repeating(callback_ping, interval=MINUTE * 5, first=1)
+    jobQueue.run_repeating(callback_ip, interval=MINUTE * 30, first=1)
+    jobQueue.run_repeating(callback_ping, interval=MINUTE * 30, first=1)
 
     # Start the Bot
     updater.start_polling()
