@@ -1,14 +1,7 @@
 from typing import Tuple
 import requests
 from bs4 import BeautifulSoup
-
-def _get_libby_details(url: str) -> Tuple[str, str]:
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-
-    book_name = soup.select_one('header h1').text
-    author = soup.select_one('table tbody tr td').text
-    return book_name, author
+from fetcher import google_podcast, libby, podcast_addict, merkaz_yahel
 
 podcast_to_tag = {
     'יחסינו לאן': '@ranlevi',
@@ -38,33 +31,28 @@ podcast_to_tag = {
     'התמונה הגדולה‎': '@therealnirs @aviadby'
 }
 
-def _get_podcast_details(url: str) -> Tuple[str, str]:
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
+def _format_book(name: str, author: str, source: str) -> str:
+    return f"קורא עכשיו:\n{name} ({author})\n{source}\n\nעם #ליבי #הספריה_הדיגיטלית_הישראלית @LibbyApp\n\n#פיד_קריאה #telegram2twitter"
 
-    podcast = soup.select_one('.ik7nMd').text.strip()
-    episode = soup.select_one('.wv3SK').text.strip()
-
-    return podcast, episode
-
-def _get_merkaz_yahel(url: str) -> Tuple[str, str]:
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-
-    podcast = 'בגוף ראשון'
-    episode = soup.title.string.replace(' - מרכז יהל', '')
-
-    return podcast, episode
-
+def _format_podcast(podcast: str, episode: str, source: str) -> str:
+    tag = podcast_to_tag.get(podcast, '')
+    return f"מאזין עכשיו:\n{episode}\nמתוך הפודקאסט \"{podcast}\"\n{source}\n\n{tag} #פודקאסט #telegram2twitter"
 
 def format(source: str) -> str:
     if 'share.libbyapp.com' in source:
-        name, author = _get_libby_details(source)
-        return f"קורא עכשיו:\n{name} ({author})\n{source}\n\nעם #ליבי #הספריה_הדיגיטלית_הישראלית @LibbyApp\n\n#פיד_קריאה #telegram2twitter"
+        name, author = libby(source)
+        return _format_book(name, author, source)
     
-    if 'podcasts.google.com' in source or 'merkazyahel.org.il' in source:
-        podcast, episode = _get_podcast_details(source) if 'podcasts.google.com' in source else _get_merkaz_yahel(source)
-        tag = podcast_to_tag.get(podcast, '')
-        return f"מאזין עכשיו:\n{episode}\nמתוך הפודקאסט \"{podcast}\"\n{source}\n\n{tag} #פודקאסט #telegram2twitter"
+    if 'podcasts.google.com' in source:
+        podcast, episode = google_podcast(source)
+        return _format_podcast(podcast, episode, source)
+    
+    if 'merkazyahel.org.il' in source:
+        podcast, episode = merkaz_yahel(source)
+        return _format_podcast(podcast, episode, source)
+    
+    if 'podcastaddict.com' in source:
+        podcast, episode = podcast_addict(source)
+        return _format_podcast(podcast, episode, source)
 
     return None
